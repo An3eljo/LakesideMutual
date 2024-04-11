@@ -31,6 +31,8 @@ services:
   customer-core:
     build: customer-core
     image: lakesidemutual/customer-core
+    depends_on:
+      - db
     environment:
       - "SPRING_BOOT_ADMIN_CLIENT_URL=http://spring-boot-admin:9000"
     ports:
@@ -119,3 +121,18 @@ services:
       - "ACTIVEMQ_PORT=61613"
     ports:
       - "50051:50051"
+
+  db:
+    image: mysql:8.0-debian
+    environment:
+      - "MYSQL_ROOT_PASSWORD=yxI75k4EhlMLnypN5gPWoebXg3SSjEMMh5PrQRXHRkJg8GdIXS"
+      - "MYSQL_DATABASE=customer-core"
+      - "MYSQL_USER=zUBmbOnuoIUh8S8mbShACTp1yrWv1434"
+      - "MYSQL_PASSWORD=82RsjGOsP7saWUX4xHk9xIXDuMQF2EDA"
+    volumes:
+      - lakesidemutual_db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  lakesidemutual_db_data:
